@@ -1,0 +1,53 @@
+<nav class="navbar" [ngClass]="{ 'navbar--scrolled': scrolled(), 'navbar--open': mobileMenuOpen() }">
+  <div class="navbar__container">
+    <!-- Logo -->
+    <a class="navbar__brand" (click)="scrollTo('hero')" role="button" tabindex="0">
+      <span class="navbar__logo-icon">◆</span>
+      <span class="navbar__logo-text">Mineradora <strong>Sílica</strong></span>
+    </a>
+
+    <!-- Links desktop -->
+    <ul class="navbar__links">
+      @for (link of navLinks; track link.fragment) {
+        <li>
+          <a class="navbar__link" (click)="scrollTo(link.fragment)" role="button" tabindex="0">
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- CTA desktop -->
+    <a class="navbar__cta" (click)="scrollTo('contato')" role="button" tabindex="0">
+      Solicitar Orçamento
+    </a>
+
+    <!-- Hamburger mobile -->
+    <button
+      class="navbar__hamburger"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="mobileMenuOpen()"
+      aria-label="Abrir menu de navegação"
+    >
+      <span class="navbar__hamburger-line"></span>
+      <span class="navbar__hamburger-line"></span>
+      <span class="navbar__hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Menu mobile -->
+  <div class="navbar__mobile-menu" [ngClass]="{ 'navbar__mobile-menu--open': mobileMenuOpen() }">
+    <ul class="navbar__mobile-links">
+      @for (link of navLinks; track link.fragment) {
+        <li>
+          <a class="navbar__mobile-link" (click)="scrollTo(link.fragment)" role="button" tabindex="0">
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+    <a class="navbar__mobile-cta" (click)="scrollTo('contato')" role="button" tabindex="0">
+      Solicitar Orçamento
+    </a>
+  </div>
+</nav>

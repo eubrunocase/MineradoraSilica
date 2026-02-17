@@ -1,0 +1,203 @@
+@use 'variables' as *;
+
+// ============================================
+// Mixins de Breakpoints (mobile-first)
+// ============================================
+
+@mixin screen-sm {
+  @media (min-width: $bp-sm) { @content; }
+}
+
+@mixin screen-md {
+  @media (min-width: $bp-md) { @content; }
+}
+
+@mixin screen-lg {
+  @media (min-width: $bp-lg) { @content; }
+}
+
+@mixin screen-xl {
+  @media (min-width: $bp-xl) { @content; }
+}
+
+@mixin screen-2xl {
+  @media (min-width: $bp-2xl) { @content; }
+}
+
+// ============================================
+// Layout Mixins
+// ============================================
+
+@mixin container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+}
+
+@mixin section-padding {
+  padding-block: $spacing-3xl;
+
+  @include screen-md {
+    padding-block: $spacing-4xl;
+  }
+}
+
+// ============================================
+// Flexbox Helpers
+// ============================================
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// ============================================
+// Tipografia Mixins
+// ============================================
+
+@mixin heading-xl {
+  font-family: $font-family-heading;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+
+  @include screen-md {
+    font-size: $font-size-3xl;
+  }
+
+  @include screen-lg {
+    font-size: $font-size-4xl;
+  }
+}
+
+@mixin heading-lg {
+  font-family: $font-family-heading;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+
+  @include screen-md {
+    font-size: $font-size-2xl;
+  }
+
+  @include screen-lg {
+    font-size: $font-size-3xl;
+  }
+}
+
+@mixin heading-md {
+  font-family: $font-family-heading;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+
+  @include screen-md {
+    font-size: $font-size-xl;
+  }
+}
+
+@mixin body-text {
+  font-family: $font-family-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+
+  @include screen-md {
+    font-size: $font-size-md;
+  }
+}
+
+// ============================================
+// Botões
+// ============================================
+
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-lg;
+  font-family: $font-family-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  transition: all $transition-normal;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin btn-primary {
+  @include btn-base;
+  background-color: $color-accent;
+  color: $color-white;
+  border-color: $color-accent;
+
+  &:hover:not(:disabled) {
+    background-color: darken($color-accent, 8%);
+    border-color: darken($color-accent, 8%);
+  }
+}
+
+@mixin btn-secondary {
+  @include btn-base;
+  background-color: transparent;
+  color: $color-white;
+  border-color: $color-white;
+
+  &:hover:not(:disabled) {
+    background-color: $color-white;
+    color: $color-primary;
+  }
+}
+
+@mixin btn-outline {
+  @include btn-base;
+  background-color: transparent;
+  color: $color-primary;
+  border-color: $color-primary;
+
+  &:hover:not(:disabled) {
+    background-color: $color-primary;
+    color: $color-white;
+  }
+}
+
+// ============================================
+// Seção
+// ============================================
+
+@mixin section-heading {
+  @include heading-lg;
+  color: $color-primary;
+  text-align: center;
+  margin-bottom: $spacing-md;
+}
+
+@mixin section-subheading {
+  @include body-text;
+  color: $color-gray-600;
+  text-align: center;
+  max-width: 640px;
+  margin-inline: auto;
+  margin-bottom: $spacing-2xl;
+}

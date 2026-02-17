@@ -1,0 +1,21 @@
+<section class="differentials" id="diferenciais">
+  <div class="differentials__container">
+    <div class="differentials__header">
+      <h2 class="differentials__title">Nossos Diferenciais</h2>
+      <p class="differentials__subtitle">
+        O que nos torna a escolha certa para o fornecimento de areia sílica
+        de alta qualidade.
+      </p>
+    </div>
+
+    <div class="differentials__grid">
+      @for (diff of differentials; track diff.title) {
+        <div class="differentials__card">
+          <span class="differentials__card-icon">{{ diff.icon }}</span>
+          <h3 class="differentials__card-title">{{ diff.title }}</h3>
+          <p class="differentials__card-description">{{ diff.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

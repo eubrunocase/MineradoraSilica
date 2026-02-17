@@ -1,0 +1,21 @@
+<section class="applications" id="aplicacoes">
+  <div class="applications__container">
+    <div class="applications__header">
+      <h2 class="applications__title">Aplicações</h2>
+      <p class="applications__subtitle">
+        Nossa areia sílica atende a uma ampla variedade de segmentos industriais,
+        com especificações técnicas ajustadas para cada necessidade.
+      </p>
+    </div>
+
+    <div class="applications__grid">
+      @for (app of applications; track app.title) {
+        <div class="applications__item">
+          <span class="applications__item-icon">{{ app.icon }}</span>
+          <h3 class="applications__item-title">{{ app.title }}</h3>
+          <p class="applications__item-description">{{ app.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

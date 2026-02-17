@@ -1,0 +1,26 @@
+<section class="products" id="produtos">
+  <div class="products__container">
+    <div class="products__header">
+      <h2 class="products__title">Nossos Produtos</h2>
+      <p class="products__subtitle">
+        Linha completa de areia sílica beneficiada para atender às necessidades
+        específicas de cada segmento industrial.
+      </p>
+    </div>
+
+    <div class="products__grid">
+      @for (product of products; track product.name) {
+        <article class="products__card">
+          <span class="products__card-icon">{{ product.icon }}</span>
+          <h3 class="products__card-title">{{ product.name }}</h3>
+          <p class="products__card-description">{{ product.description }}</p>
+          <ul class="products__card-specs">
+            @for (spec of product.specs; track spec) {
+              <li class="products__card-spec">{{ spec }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </div>
+</section>

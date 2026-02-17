@@ -1,0 +1,190 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.contact {
+  @include section-padding;
+  background-color: $color-white;
+
+  &__container {
+    @include container;
+  }
+
+  &__header {
+    margin-bottom: $spacing-3xl;
+  }
+
+  &__title {
+    @include section-heading;
+  }
+
+  &__subtitle {
+    @include section-subheading;
+  }
+
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-2xl;
+
+    @include screen-lg {
+      grid-template-columns: 1fr 1.5fr;
+      gap: $spacing-3xl;
+    }
+  }
+
+  // ---- Info lateral ----
+  &__info {
+    @include flex-column;
+    gap: $spacing-lg;
+  }
+
+  &__info-title {
+    @include heading-md;
+    color: $color-primary;
+  }
+
+  &__info-text {
+    @include body-text;
+    color: $color-gray-600;
+  }
+
+  &__info-items {
+    @include flex-column;
+    gap: $spacing-lg;
+    margin-top: $spacing-md;
+  }
+
+  &__info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+
+    strong {
+      display: block;
+      font-weight: $font-weight-semibold;
+      color: $color-gray-800;
+      margin-bottom: $spacing-xs;
+    }
+
+    p {
+      font-size: $font-size-sm;
+      color: $color-gray-600;
+    }
+  }
+
+  &__info-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  // ---- Formulário ----
+  &__form {
+    @include flex-column;
+    gap: $spacing-lg;
+    background-color: $color-gray-50;
+    padding: $spacing-xl;
+    border-radius: $border-radius-lg;
+    border: 1px solid $color-gray-200;
+
+    @include screen-md {
+      padding: $spacing-2xl;
+    }
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+
+    @include screen-sm {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__field {
+    @include flex-column;
+    gap: $spacing-xs;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-gray-700;
+  }
+
+  &__input {
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-base;
+    color: $color-gray-800;
+    background-color: $color-white;
+    border: 1px solid $color-gray-300;
+    border-radius: $border-radius-md;
+    transition: border-color $transition-fast, box-shadow $transition-fast;
+    outline: none;
+
+    &::placeholder {
+      color: $color-gray-400;
+    }
+
+    &:focus {
+      border-color: $color-primary-light;
+      box-shadow: 0 0 0 3px rgba($color-primary-light, 0.15);
+    }
+
+    &--error {
+      border-color: $color-error;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba($color-error, 0.15);
+      }
+    }
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  &__error {
+    font-size: $font-size-xs;
+    color: $color-error;
+    font-weight: $font-weight-medium;
+  }
+
+  &__submit {
+    @include btn-primary;
+    width: 100%;
+    padding: $spacing-md;
+    font-size: $font-size-md;
+
+    @include screen-sm {
+      width: auto;
+      align-self: flex-start;
+      padding: $spacing-md $spacing-2xl;
+    }
+  }
+
+  // ---- Mensagem de sucesso ----
+  &__success {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-md $spacing-lg;
+    background-color: rgba($color-success, 0.08);
+    border: 1px solid rgba($color-success, 0.3);
+    border-radius: $border-radius-md;
+  }
+
+  &__success-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  &__success-text {
+    font-size: $font-size-sm;
+    color: $color-success;
+    font-weight: $font-weight-medium;
+  }
+}

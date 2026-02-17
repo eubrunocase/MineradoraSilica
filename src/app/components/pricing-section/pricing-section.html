@@ -1,0 +1,44 @@
+<section class="pricing" id="planos">
+  <div class="pricing__container">
+    <div class="pricing__header">
+      <h2 class="pricing__title">Planos de Fornecimento</h2>
+      <p class="pricing__subtitle">
+        Soluções flexíveis para cada porte de operação.
+        Entre em contato para receber uma proposta personalizada.
+      </p>
+    </div>
+
+    <div class="pricing__grid">
+      @for (plan of plans; track plan.name) {
+        <article
+          class="pricing__card"
+          [class.pricing__card--highlighted]="plan.highlighted"
+        >
+          @if (plan.highlighted) {
+            <span class="pricing__badge">Mais Popular</span>
+          }
+          <h3 class="pricing__card-name">{{ plan.name }}</h3>
+          <p class="pricing__card-volume">{{ plan.volumeRange }}</p>
+          <p class="pricing__card-description">{{ plan.description }}</p>
+
+          <ul class="pricing__features">
+            @for (feature of plan.features; track feature) {
+              <li class="pricing__feature">
+                <span class="pricing__feature-icon">✓</span>
+                {{ feature }}
+              </li>
+            }
+          </ul>
+
+          <button
+            class="pricing__card-cta"
+            [class.pricing__card-cta--primary]="plan.highlighted"
+            (click)="scrollTo('contato')"
+          >
+            {{ plan.ctaLabel }}
+          </button>
+        </article>
+      }
+    </div>
+  </div>
+</section>

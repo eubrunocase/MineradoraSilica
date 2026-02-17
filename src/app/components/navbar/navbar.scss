@@ -1,0 +1,183 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: $navbar-height;
+  transition: background-color $transition-normal, box-shadow $transition-normal;
+  background-color: rgba($color-primary-dark, 0.95);
+  backdrop-filter: blur(8px);
+
+  &--scrolled {
+    box-shadow: $shadow-md;
+  }
+
+  &--open {
+    background-color: rgba($color-primary-dark, 0.95);
+  }
+
+  &__container {
+    @include container;
+    @include flex-between;
+    height: 100%;
+  }
+
+  // ---- Brand / Logo ----
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    cursor: pointer;
+    color: $color-white;
+    user-select: none;
+  }
+
+  &__logo-icon {
+    font-size: $font-size-xl;
+    color: $color-secondary;
+  }
+
+  &__logo-text {
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
+    letter-spacing: 0.02em;
+
+    strong {
+      font-weight: $font-weight-bold;
+      color: $color-secondary;
+    }
+  }
+
+  // ---- Links desktop ----
+  &__links {
+    display: none;
+    align-items: center;
+    gap: $spacing-lg;
+
+    @include screen-lg {
+      display: flex;
+    }
+  }
+
+  &__link {
+    color: $color-gray-200;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  // ---- CTA desktop ----
+  &__cta {
+    display: none;
+
+    @include screen-lg {
+      @include btn-primary;
+      display: inline-flex;
+      padding: $spacing-xs $spacing-lg;
+      font-size: $font-size-sm;
+    }
+  }
+
+  // ---- Hamburger ----
+  &__hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+
+    @include screen-lg {
+      display: none;
+    }
+  }
+
+  &__hamburger-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: $color-white;
+    border-radius: 2px;
+    transition: transform $transition-normal, opacity $transition-normal;
+  }
+
+  &--open &__hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  &--open &__hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  &--open &__hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  // ---- Mobile menu ----
+  &__mobile-menu {
+    position: absolute;
+    top: $navbar-height;
+    left: 0;
+    right: 0;
+    background-color: rgba($color-primary-dark, 0.98);
+    backdrop-filter: blur(8px);
+    padding: $spacing-lg;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform $transition-normal, opacity $transition-normal;
+
+    @include screen-lg {
+      display: none;
+    }
+
+    &--open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &__mobile-links {
+    @include flex-column;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__mobile-link {
+    display: block;
+    color: $color-gray-200;
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: rgba($color-white, 0.08);
+      color: $color-secondary;
+    }
+  }
+
+  &__mobile-cta {
+    @include btn-primary;
+    width: 100%;
+    text-align: center;
+  }
+}
