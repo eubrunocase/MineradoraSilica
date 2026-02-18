@@ -3,27 +3,48 @@
 
 .applications {
   @include section-padding;
-  background-color: $color-primary;
+  background-color: $color-primary-dark;
   color: $color-white;
 
   &__container {
     @include container;
   }
 
+  // ---- Header ----
   &__header {
+    text-align: center;
+    max-width: 700px;
+    margin-inline: auto;
     margin-bottom: $spacing-3xl;
   }
 
+  &__label {
+    display: inline-block;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $color-secondary;
+    background-color: rgba($color-secondary, 0.1);
+    padding: $spacing-xs $spacing-md;
+    border-radius: $border-radius-full;
+    margin-bottom: $spacing-md;
+  }
+
   &__title {
-    @include section-heading;
+    @include heading-lg;
     color: $color-white;
+    margin-bottom: $spacing-md;
   }
 
   &__subtitle {
-    @include section-subheading;
-    color: $color-gray-300;
+    @include body-text;
+    color: $color-gray-400;
+    max-width: 580px;
+    margin-inline: auto;
   }
 
+  // ---- Grid ----
   &__grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -38,36 +59,101 @@
     }
   }
 
-  &__item {
+  // ---- Card ----
+  &__card {
     @include flex-column;
-    align-items: center;
-    text-align: center;
-    padding: $spacing-xl $spacing-md;
-    border-radius: $border-radius-md;
-    background-color: rgba($color-white, 0.05);
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    background-color: rgba($color-white, 0.04);
     border: 1px solid rgba($color-white, 0.08);
-    transition: background-color $transition-normal;
+    transition: transform $transition-normal, box-shadow $transition-normal;
 
     &:hover {
-      background-color: rgba($color-white, 0.1);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    &:hover .applications__card-image {
+      transform: scale(1.08);
+    }
+
+    &:hover .applications__card-overlay {
+      opacity: 0.3;
     }
   }
 
-  &__item-icon {
-    font-size: 2.5rem;
-    margin-bottom: $spacing-md;
+  &__card-image-wrap {
+    position: relative;
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+
+    @include screen-md {
+      height: 180px;
+    }
   }
 
-  &__item-title {
+  &__card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  &__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 30%, rgba($color-primary-dark, 0.7) 100%);
+    opacity: 0.5;
+    transition: opacity $transition-normal;
+  }
+
+  &__card-body {
+    @include flex-column;
+    flex: 1;
+    padding: $spacing-lg;
+  }
+
+  &__card-title {
+    font-family: $font-family-heading;
     font-size: $font-size-base;
     font-weight: $font-weight-semibold;
-    margin-bottom: $spacing-sm;
     color: $color-secondary-light;
+    margin-bottom: $spacing-sm;
+    line-height: $line-height-tight;
   }
 
-  &__item-description {
+  &__card-description {
     font-size: $font-size-sm;
     color: $color-gray-400;
     line-height: $line-height-normal;
+    flex: 1;
+    margin-bottom: $spacing-md;
+  }
+
+  // ---- Link "Saiba mais" ----
+  &__card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    text-decoration: none;
+    transition: color $transition-fast, gap $transition-fast;
+
+    &:hover {
+      color: $color-secondary-light;
+      gap: $spacing-sm;
+    }
+
+    svg {
+      flex-shrink: 0;
+      transition: transform $transition-fast;
+    }
+
+    &:hover svg {
+      transform: translateX(2px);
+    }
   }
 }

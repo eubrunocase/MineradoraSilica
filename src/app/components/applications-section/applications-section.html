@@ -1,7 +1,8 @@
 <section class="applications" id="aplicacoes">
   <div class="applications__container">
     <div class="applications__header">
-      <h2 class="applications__title">Aplicações</h2>
+      <span class="applications__label">Segmentos Atendidos</span>
+      <h2 class="applications__title">Aplicações Industriais</h2>
       <p class="applications__subtitle">
         Nossa areia sílica atende a uma ampla variedade de segmentos industriais,
         com especificações técnicas ajustadas para cada necessidade.
@@ -10,11 +11,25 @@
 
     <div class="applications__grid">
       @for (app of applications; track app.title) {
-        <div class="applications__item">
-          <span class="applications__item-icon">{{ app.icon }}</span>
-          <h3 class="applications__item-title">{{ app.title }}</h3>
-          <p class="applications__item-description">{{ app.description }}</p>
-        </div>
+        <article class="applications__card">
+          <div class="applications__card-image-wrap">
+            <img
+              class="applications__card-image"
+              [src]="app.image"
+              [alt]="app.imageAlt"
+              loading="lazy"
+            />
+            <div class="applications__card-overlay"></div>
+          </div>
+          <div class="applications__card-body">
+            <h3 class="applications__card-title">{{ app.title }}</h3>
+            <p class="applications__card-description">{{ app.description }}</p>
+            <a class="applications__card-link" [href]="app.link">
+              Saiba mais
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
       }
     </div>
   </div>

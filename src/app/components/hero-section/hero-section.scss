@@ -3,66 +3,110 @@
 
 .hero {
   position: relative;
-  min-height: calc(100vh - #{$navbar-height});
+  min-height: 100vh;
   @include flex-center;
-  background: linear-gradient(135deg, $color-primary-dark 0%, $color-primary 50%, $color-primary-light 100%);
   overflow: hidden;
 
+  // ---- Background image ----
+  &__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  &__bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+  }
+
+  // ---- Overlay escuro com gradiente ----
   &__overlay {
     position: absolute;
     inset: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="0.5" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect fill="url(%23grain)" width="100" height="100"/></svg>');
-    opacity: 0.5;
-    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgba($color-primary-dark, 0.85) 0%,
+      rgba($color-primary, 0.75) 50%,
+      rgba($color-primary-dark, 0.9) 100%
+    );
   }
 
+  // ---- Conteúdo ----
   &__content {
     @include container;
     @include flex-column;
     align-items: center;
     text-align: center;
     position: relative;
-    z-index: 1;
-    padding-block: $spacing-3xl;
+    z-index: 2;
+    padding-block: $spacing-4xl $spacing-3xl;
+
+    @include screen-lg {
+      padding-block: $spacing-4xl;
+    }
   }
 
   &__badge {
     display: inline-block;
     padding: $spacing-xs $spacing-lg;
-    background-color: rgba($color-secondary, 0.15);
-    color: $color-secondary;
-    font-size: $font-size-sm;
+    background-color: rgba($color-secondary, 0.12);
+    color: $color-secondary-light;
+    font-size: $font-size-xs;
     font-weight: $font-weight-semibold;
     border-radius: $border-radius-full;
-    border: 1px solid rgba($color-secondary, 0.3);
-    margin-bottom: $spacing-lg;
-    letter-spacing: 0.05em;
+    border: 1px solid rgba($color-secondary, 0.25);
+    margin-bottom: $spacing-xl;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-  }
 
-  &__title {
-    @include heading-xl;
-    color: $color-white;
-    margin-bottom: $spacing-lg;
-
-    strong {
-      color: $color-secondary;
+    @include screen-md {
+      font-size: $font-size-sm;
     }
   }
 
-  &__subtitle {
-    @include body-text;
-    color: $color-gray-300;
-    max-width: 600px;
-    margin-bottom: $spacing-2xl;
+  // ---- Headline ----
+  &__title {
+    @include heading-xxl;
+    color: $color-white;
+    margin-bottom: $spacing-lg;
+    max-width: 900px;
+
+    strong {
+      color: $color-secondary;
+      display: inline;
+    }
+
+    @include screen-md {
+      margin-bottom: $spacing-xl;
+    }
   }
 
+  // ---- Subtítulo ----
+  &__subtitle {
+    font-family: $font-family-body;
+    font-size: $font-size-base;
+    font-weight: $font-weight-regular;
+    line-height: $line-height-loose;
+    color: $color-gray-300;
+    max-width: 680px;
+    margin-bottom: $spacing-2xl;
+
+    @include screen-md {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-3xl;
+    }
+  }
+
+  // ---- Botões CTA ----
   &__actions {
     display: flex;
     flex-direction: column;
     gap: $spacing-md;
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     margin-bottom: $spacing-3xl;
 
     @include screen-sm {
@@ -76,52 +120,65 @@
     @include btn-primary;
     padding: $spacing-md $spacing-2xl;
     font-size: $font-size-md;
+    border-radius: $border-radius-sm;
   }
 
   &__btn-secondary {
     @include btn-secondary;
     padding: $spacing-md $spacing-2xl;
     font-size: $font-size-md;
+    border-radius: $border-radius-sm;
   }
 
-  // ---- Indicadores / Stats ----
-  &__stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-lg;
-    width: 100%;
-    max-width: 500px;
-
-    @include screen-md {
-      gap: $spacing-2xl;
-      max-width: 600px;
-    }
-  }
-
-  &__stat {
-    @include flex-column;
+  // ---- Trust indicators ----
+  &__trust {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: $spacing-xs;
-  }
-
-  &__stat-value {
-    font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
-    color: $color-secondary;
+    gap: $spacing-md;
+    padding-top: $spacing-xl;
+    border-top: 1px solid rgba($color-white, 0.1);
 
     @include screen-md {
-      font-size: $font-size-2xl;
+      flex-direction: row;
+      gap: $spacing-xl;
     }
   }
 
-  &__stat-label {
-    font-size: $font-size-xs;
+  &__trust-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
     color: $color-gray-400;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    letter-spacing: 0.02em;
 
     @include screen-md {
       font-size: $font-size-sm;
+    }
+  }
+
+  &__trust-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: $color-secondary;
+
+    @include screen-md {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__trust-divider {
+    display: none;
+
+    @include screen-md {
+      display: block;
+      width: 1px;
+      height: 24px;
+      background-color: rgba($color-white, 0.15);
     }
   }
 }

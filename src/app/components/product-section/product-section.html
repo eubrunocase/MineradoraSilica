@@ -1,24 +1,39 @@
 <section class="products" id="produtos">
   <div class="products__container">
     <div class="products__header">
-      <h2 class="products__title">Nossos Produtos</h2>
+      <span class="products__label">Linha de Produtos</span>
+      <h2 class="products__title">Soluções em Areia Sílica para Cada Segmento</h2>
       <p class="products__subtitle">
-        Linha completa de areia sílica beneficiada para atender às necessidades
-        específicas de cada segmento industrial.
+        Matéria-prima beneficiada com rigoroso controle de qualidade,
+        disponível em diferentes granulometrias e graus de pureza para
+        atender às especificações mais exigentes da indústria.
       </p>
     </div>
 
     <div class="products__grid">
       @for (product of products; track product.name) {
         <article class="products__card">
-          <span class="products__card-icon">{{ product.icon }}</span>
-          <h3 class="products__card-title">{{ product.name }}</h3>
-          <p class="products__card-description">{{ product.description }}</p>
-          <ul class="products__card-specs">
-            @for (spec of product.specs; track spec) {
-              <li class="products__card-spec">{{ spec }}</li>
-            }
-          </ul>
+          <div class="products__card-image-wrap">
+            <img
+              class="products__card-image"
+              [src]="product.image"
+              [alt]="product.imageAlt"
+              loading="lazy"
+            />
+          </div>
+          <div class="products__card-body">
+            <h3 class="products__card-title">{{ product.name }}</h3>
+            <p class="products__card-description">{{ product.description }}</p>
+            <ul class="products__card-specs">
+              @for (spec of product.specs; track spec) {
+                <li class="products__card-spec">{{ spec }}</li>
+              }
+            </ul>
+            <a class="products__card-link" [href]="product.link">
+              Saiba mais
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
         </article>
       }
     </div>

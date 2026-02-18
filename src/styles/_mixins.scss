@@ -68,6 +68,22 @@
 // Tipografia Mixins
 // ============================================
 
+@mixin heading-xxl {
+  font-family: $font-family-heading;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-extrabold;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+
+  @include screen-md {
+    font-size: $font-size-5xl;
+  }
+
+  @include screen-lg {
+    font-size: $font-size-6xl;
+  }
+}
+
 @mixin heading-xl {
   font-family: $font-family-heading;
   font-size: $font-size-2xl;
