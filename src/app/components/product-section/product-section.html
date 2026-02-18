@@ -1,41 +1,53 @@
 <section class="products" id="produtos">
   <div class="products__container">
     <div class="products__header">
-      <span class="products__label">Linha de Produtos</span>
-      <h2 class="products__title">Soluções em Areia Sílica para Cada Segmento</h2>
-      <p class="products__subtitle">
-        Matéria-prima beneficiada com rigoroso controle de qualidade,
-        disponível em diferentes granulometrias e graus de pureza para
-        atender às especificações mais exigentes da indústria.
-      </p>
+      <span class="products__label">Nossas Soluções</span>
+      <h2 class="products__title">Areia Sílica para Cada Segmento</h2>
     </div>
 
-    <div class="products__grid">
-      @for (product of products; track product.name) {
-        <article class="products__card">
-          <div class="products__card-image-wrap">
+    <div class="products__showcase">
+      <div class="products__nav">
+        @for (product of products; track product.name; let i = $index) {
+          <button
+            class="products__nav-btn"
+            [class.products__nav-btn--active]="activeIndex() === i"
+            (click)="setActive(i)"
+            type="button"
+          >
+            <span class="products__nav-indicator"></span>
+            {{ product.name }}
+          </button>
+        }
+      </div>
+
+      <article class="products__display">
+        <div class="products__image-wrapper">
+          @for (product of [activeProduct()]; track product.name) {
             <img
-              class="products__card-image"
               [src]="product.image"
               [alt]="product.imageAlt"
+              class="products__image fade-in"
               loading="lazy"
             />
-          </div>
-          <div class="products__card-body">
-            <h3 class="products__card-title">{{ product.name }}</h3>
-            <p class="products__card-description">{{ product.description }}</p>
-            <ul class="products__card-specs">
-              @for (spec of product.specs; track spec) {
-                <li class="products__card-spec">{{ spec }}</li>
-              }
-            </ul>
-            <a class="products__card-link" [href]="product.link">
-              Saiba mais
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </div>
-        </article>
-      }
+          }
+        </div>
+
+        <div class="products__content">
+          <h3 class="products__content-title">{{ activeProduct().name }}</h3>
+          <p class="products__content-desc">{{ activeProduct().description }}</p>
+
+          <ul class="products__specs">
+            @for (spec of activeProduct().specs; track spec) {
+              <li class="products__spec-item">{{ spec }}</li>
+            }
+          </ul>
+
+          <a [href]="activeProduct().link" class="products__cta">
+            Saiba mais sobre {{ activeProduct().name }}
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
     </div>
   </div>
 </section>

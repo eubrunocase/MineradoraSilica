@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, computed, Inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 /** Modelo de produto */
 interface Product {
@@ -16,10 +17,15 @@ interface Product {
   templateUrl: './product-section.html',
   styleUrl: './product-section.scss',
 })
-export class ProductSectionComponent {
+export class ProductSectionComponent implements OnInit, OnDestroy {
+  // Controle do índice ativo
+  protected activeIndex = signal(0);
+  private intervalId: any;
+
+  // Dados (Mantidos os originais)
   protected readonly products: Product[] = [
     {
-      image: 'https://images.unsplash.com/photo-1503708928676-1cb796a0891e?auto=format&fit=crop&w=640&q=80',
+      image: 'https://images.unsplash.com/photo-1503708928676-1cb796a0891e?auto=format&fit=crop&w=1600&q=800',
       imageAlt: 'Canteiro de obras com concreto e areia',
       name: 'Areia Sílica para Construção',
       description:
@@ -28,7 +34,7 @@ export class ProductSectionComponent {
       link: '/produtos/construcao',
     },
     {
-      image: 'https://plus.unsplash.com/premium_photo-1661952346976-ac9d2ea8825a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHZpZHJvJTIwaW5kdXN0cmlhbHxlbnwwfHwwfHx8MA%3D%3D',
+      image: 'https://plus.unsplash.com/premium_photo-1661952346976-ac9d2ea8825a?w=1600&auto=format&fit=crop&q=800&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHZpZHJvJTIwaW5kdXN0cmlhbHxlbnwwfHwwfHx8MA%3D%3D',
       imageAlt: 'Painéis de vidro industrial',
       name: 'Sílica para Vidros',
       description:
@@ -37,7 +43,7 @@ export class ProductSectionComponent {
       link: '/produtos/vidros',
     },
     {
-      image: 'https://images.unsplash.com/photo-1572277603731-6941cdb65597?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8ZnVuZGklQzMlQTclQzMlQTNvfGVufDB8fDB8fHww',
+      image: 'https://images.unsplash.com/photo-1572277603731-6941cdb65597?w=1600&auto=format&fit=crop&q=800&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8ZnVuZGklQzMlQTclQzMlQTNvfGVufDB8fDB8fHww',
       imageAlt: 'Processo de fundição industrial',
       name: 'Areia para Fundição',
       description:
@@ -46,7 +52,7 @@ export class ProductSectionComponent {
       link: '/produtos/fundicao',
     },
     {
-      image: 'https://media.istockphoto.com/id/148659116/pt/foto/revestimento-do-pó-em-uma-câmera-especial.webp?a=1&b=1&s=612x612&w=0&k=20&c=d8ig_ZbXrc95LILYWAyad0_gZAJlaNU-90jjo84vWOg=',
+      image: 'https://plus.unsplash.com/premium_photo-1661962384749-bec17bc69dfd?w=1600&auto=format&fit=crop&q=800&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHBhaW50JTIwaW5kdXN0cnl8ZW58MHx8MHx8fDA%3D',
       imageAlt: 'Latas de tinta industrial',
       name: 'Sílica para Tintas e Revestimentos',
       description:
@@ -55,7 +61,7 @@ export class ProductSectionComponent {
       link: '/produtos/tintas',
     },
     {
-      image: 'https://media.istockphoto.com/id/1324181880/pt/foto/pool-water-filtration-system-outdoor-sand-pump-maintaining-the-purity-of-water-cleaning-from.webp?a=1&b=1&s=612x612&w=0&k=20&c=wEjkX2QeHxq1-iLNpD1DCvZfj0DBebqOgVi78YcThZA=',
+      image: 'https://plus.unsplash.com/premium_photo-1682144318933-fcab743fb527?w=1600&auto=format&fit=crop&q=800&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGZpbHRyYXRpb258ZW58MHx8MHx8fDA%3D',
       imageAlt: 'Sistema de filtração e tratamento de água',
       name: 'Areia para Filtração',
       description:
@@ -64,7 +70,7 @@ export class ProductSectionComponent {
       link: '/produtos/filtracao',
     },
     {
-      image: 'https://media.istockphoto.com/id/485339173/pt/foto/fábrica.webp?a=1&b=1&s=612x612&w=0&k=20&c=K5SipsJzCSyOGsGgNdVFe2rB8exGlIycJCtpnXauT-A=',
+      image: 'https://images.unsplash.com/photo-1624771002998-4aadfd43e7c4?w=1600&auto=format&fit=crop&q=800&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8b2lsJTIwYW5kJTIwZ2FzfGVufDB8fDB8fHww',
       imageAlt: 'Plataforma de petróleo e gás',
       name: 'Sílica para Petróleo e Gás',
       description:
@@ -73,4 +79,47 @@ export class ProductSectionComponent {
       link: '/produtos/petroleo',
     },
   ];
+
+  // Produto atualmente selecionado
+  protected activeProduct = computed(() => this.products[this.activeIndex()]);
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  ngOnInit(): void {
+    // Inicia o timer apenas no navegador (evita erro no SSR)
+    if (isPlatformBrowser(this.platformId)) {
+      this.startTimer();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.stopTimer();
+  }
+
+  // Define um produto manualmente ao clicar
+  setActive(index: number): void {
+    this.activeIndex.set(index);
+    this.resetTimer();
+  }
+
+  private startTimer(): void {
+    this.intervalId = setInterval(() => {
+      this.nextProduct();
+    }, 5000); // Troca a cada 5 segundos
+  }
+
+  private stopTimer(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  private resetTimer(): void {
+    this.stopTimer();
+    this.startTimer();
+  }
+
+  private nextProduct(): void {
+    this.activeIndex.update((index) => (index + 1) % this.products.length);
+  }
 }
