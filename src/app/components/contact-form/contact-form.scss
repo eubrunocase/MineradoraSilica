@@ -158,10 +158,11 @@
     width: 100%;
     padding: $spacing-md;
     font-size: $font-size-md;
+   
 
     @include screen-sm {
       width: auto;
-      align-self: flex-start;
+      align-self: center;
       padding: $spacing-md $spacing-2xl;
     }
   }

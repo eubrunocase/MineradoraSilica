@@ -1,6 +1,7 @@
 <section class="differentials" id="diferenciais">
   <div class="differentials__container">
     <div class="differentials__header">
+      <span class="differentials__label">Por que nos escolher</span>
       <h2 class="differentials__title">Nossos Diferenciais</h2>
       <p class="differentials__subtitle">
         O que nos torna a escolha certa para o fornecimento de areia sílica
@@ -10,11 +11,25 @@
 
     <div class="differentials__grid">
       @for (diff of differentials; track diff.title) {
-        <div class="differentials__card">
-          <span class="differentials__card-icon">{{ diff.icon }}</span>
-          <h3 class="differentials__card-title">{{ diff.title }}</h3>
-          <p class="differentials__card-description">{{ diff.description }}</p>
-        </div>
+        <article class="differentials__card">
+          <div class="differentials__card-image-wrap">
+            <img
+              class="differentials__card-image"
+              [src]="diff.image"
+              [alt]="diff.imageAlt"
+              loading="lazy"
+            />
+            <div class="differentials__card-overlay"></div>
+          </div>
+          <div class="differentials__card-body">
+            <h3 class="differentials__card-title">{{ diff.title }}</h3>
+            <p class="differentials__card-description">{{ diff.description }}</p>
+            <a class="differentials__card-link" [href]="diff.link">
+              Saiba mais
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
       }
     </div>
   </div>
