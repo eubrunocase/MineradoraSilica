@@ -1,4 +1,14 @@
-import { Component, computed, Inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 /** Modelo de produto */
@@ -11,6 +21,17 @@ interface Product {
   readonly link: string;
 }
 
+/** Modelo de modalidade de venda */
+interface SalesModality {
+  readonly icon: string;
+  readonly title: string;
+  readonly subtitle: string;
+  readonly price: string;
+  readonly unit: string;
+  readonly details: string[];
+  readonly highlight?: boolean;
+}
+
 @Component({
   selector: 'app-product-section',
   standalone: true,
@@ -18,9 +39,50 @@ interface Product {
   styleUrl: './product-section.scss',
 })
 export class ProductSectionComponent implements OnInit, OnDestroy {
-  // Controle do índice ativo
+  // Controle do índice ativo (carrossel de produtos)
   protected activeIndex = signal(0);
   private intervalId: any;
+
+  // Controle do carrossel horizontal de modalidades
+  @ViewChild('modalitiesTrack') modalitiesTrack!: ElementRef<HTMLDivElement>;
+  protected modalityScrollPosition = signal(0);
+
+  /** Modalidades de venda */
+  protected readonly salesModalities: SalesModality[] = [
+    {
+      icon: '🚚',
+      title: 'A Granel',
+      subtitle: 'Grandes volumes direto da mineradora',
+      price: 'R$ 1.000',
+      unit: 'por caminhão',
+      details: ['Valor por m³: R$ 130,00', 'Capacidade: ~8m³ por caminhão', 'Entrega programada'],
+      highlight: true,
+    },
+    {
+      icon: '📦',
+      title: 'Big Bags',
+      subtitle: 'Embalagem industrial de 1 tonelada',
+      price: 'R$ 250',
+      unit: 'por big bag (1t)',
+      details: ['Peso: 1.000 kg por unidade', 'Fácil movimentação com empilhadeira', 'Pedido mínimo: 5 unidades'],
+    },
+    {
+      icon: '🛍️',
+      title: 'Sacos / Ensacada',
+      subtitle: 'Embalagens de 25kg ou 50kg',
+      price: 'R$ 80',
+      unit: 'por saco de 50kg',
+      details: ['Disponível em 25kg e 50kg', 'Ideal para pequenas obras', 'Pronta entrega'],
+    },
+    {
+      icon: '⚖️',
+      title: 'Embalagens Fracionadas',
+      subtitle: 'Quantidades menores para varejo',
+      price: 'R$ 15',
+      unit: 'por kg',
+      details: ['Embalagens de 1kg a 10kg', 'Ideal para artesanato e paisagismo', 'Disponível em diversas granulometrias'],
+    },
+  ];
 
   // Dados (Mantidos os originais)
   protected readonly products: Product[] = [
@@ -100,6 +162,37 @@ export class ProductSectionComponent implements OnInit, OnDestroy {
   setActive(index: number): void {
     this.activeIndex.set(index);
     this.resetTimer();
+  }
+
+  /** Scroll do carrossel horizontal de modalidades */
+  scrollModalities(direction: 'left' | 'right'): void {
+    const track = this.modalitiesTrack?.nativeElement;
+    if (!track) return;
+    const cardWidth = 320;
+    const gap = 24;
+    const scrollAmount = cardWidth + gap;
+    const newPos =
+      direction === 'left'
+        ? Math.max(0, track.scrollLeft - scrollAmount)
+        : track.scrollLeft + scrollAmount;
+    track.scrollTo({ left: newPos, behavior: 'smooth' });
+  }
+
+  onModalitiesScroll(): void {
+    const track = this.modalitiesTrack?.nativeElement;
+    if (track) {
+      this.modalityScrollPosition.set(track.scrollLeft);
+    }
+  }
+
+  get canScrollLeft(): boolean {
+    return this.modalityScrollPosition() > 0;
+  }
+
+  get canScrollRight(): boolean {
+    const track = this.modalitiesTrack?.nativeElement;
+    if (!track) return true;
+    return track.scrollLeft < track.scrollWidth - track.clientWidth - 1;
   }
 
   private startTimer(): void {

@@ -49,5 +49,78 @@
         </div>
       </article>
     </div>
+
+    <!-- Carrossel Horizontal — Modalidades de Venda -->
+    <div class="modalities">
+      <div class="modalities__header">
+        <div class="modalities__title-group">
+          <span class="products__label">Como Comprar</span>
+          <h2 class="products__title">Modalidades de Venda</h2>
+          <p class="modalities__subtitle">
+            Oferecemos diversas opções de embalagem e entrega para atender sua necessidade.
+          </p>
+        </div>
+
+        <div class="modalities__arrows">
+          <button
+            class="modalities__arrow-btn"
+            [class.modalities__arrow-btn--disabled]="!canScrollLeft"
+            (click)="scrollModalities('left')"
+            type="button"
+            aria-label="Anterior"
+          >
+            ←
+          </button>
+          <button
+            class="modalities__arrow-btn"
+            [class.modalities__arrow-btn--disabled]="!canScrollRight"
+            (click)="scrollModalities('right')"
+            type="button"
+            aria-label="Próximo"
+          >
+            →
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="modalities__track"
+        #modalitiesTrack
+        (scroll)="onModalitiesScroll()"
+      >
+        @for (modality of salesModalities; track modality.title) {
+          <article
+            class="modalities__card"
+            [class.modalities__card--highlight]="modality.highlight"
+          >
+            @if (modality.highlight) {
+              <span class="modalities__badge">Mais vendido</span>
+            }
+
+            <div class="modalities__card-icon">{{ modality.icon }}</div>
+            <h3 class="modalities__card-title">{{ modality.title }}</h3>
+            <p class="modalities__card-subtitle">{{ modality.subtitle }}</p>
+
+            <div class="modalities__card-pricing">
+              <span class="modalities__card-price">{{ modality.price }}</span>
+              <span class="modalities__card-unit">{{ modality.unit }}</span>
+            </div>
+
+            <ul class="modalities__card-details">
+              @for (detail of modality.details; track detail) {
+                <li class="modalities__card-detail">
+                  <span class="modalities__check">✓</span>
+                  {{ detail }}
+                </li>
+              }
+            </ul>
+
+            <a href="#contato" class="modalities__card-cta">
+              Solicitar orçamento
+            </a>
+          </article>
+        }
+      </div>
+    </div>
   </div>
 </section>

@@ -200,6 +200,225 @@
   // ... (restante do código)
 }
 
+// ================================================
+// Carrossel Horizontal — Modalidades de Venda
+// ================================================
+.modalities {
+  margin-top: $spacing-4xl;
+  padding-top: $spacing-3xl;
+  border-top: 1px solid $color-gray-200;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: $spacing-xl;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+  }
+
+  &__title-group {
+    max-width: 600px;
+  }
+
+  &__subtitle {
+    font-size: $font-size-md;
+    color: $color-gray-600;
+    margin-top: $spacing-sm;
+    line-height: $line-height-normal;
+  }
+
+  &__arrows {
+    display: flex;
+    gap: $spacing-sm;
+  }
+
+  &__arrow-btn {
+    appearance: none;
+    border: 1px solid $color-gray-300;
+    background-color: $color-white;
+    width: 44px;
+    height: 44px;
+    border-radius: $border-radius-full;
+    font-size: $font-size-lg;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-primary-dark;
+    transition: all $transition-normal;
+
+    &:hover:not(&--disabled) {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      color: $color-white;
+    }
+
+    &--disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+
+  // Track de scroll horizontal
+  &__track {
+    display: flex;
+    gap: $spacing-lg;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: $spacing-md;
+    padding-top: $spacing-md;
+
+    // Esconde a scrollbar mas mantém a funcionalidade
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  // Card individual
+  &__card {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+    background: $color-white;
+    border: 1px solid $color-gray-200;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl $spacing-lg;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    position: relative;
+    transition: all $transition-normal;
+    overflow: visible;
+
+    &:hover {
+      box-shadow: $shadow-lg;
+      transform: translateY(-4px);
+      border-color: $color-gray-300;
+    }
+
+    &--highlight {
+      border-color: $color-secondary;
+      box-shadow: $shadow-md, 0 0 0 1px $color-secondary;
+      padding-top: calc(#{$spacing-xl} + 8px);
+      background: linear-gradient(
+        180deg,
+        rgba($color-secondary, 0.04) 0%,
+        $color-white 40%
+      );
+
+      &:hover {
+        border-color: $color-secondary-dark;
+        box-shadow: $shadow-lg, 0 0 0 1px $color-secondary-dark;
+      }
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $color-secondary;
+    color: $color-white;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: $spacing-xs $spacing-md;
+    border-radius: $border-radius-full;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  &__card-icon {
+    font-size: 2.5rem;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__card-title {
+    font-family: $font-family-heading;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary-dark;
+  }
+
+  &__card-subtitle {
+    font-size: $font-size-sm;
+    color: $color-gray-600;
+    line-height: $line-height-normal;
+  }
+
+  &__card-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: $spacing-xs;
+    margin: $spacing-md 0;
+    padding: $spacing-md 0;
+    border-top: 1px solid $color-gray-200;
+    border-bottom: 1px solid $color-gray-200;
+  }
+
+  &__card-price {
+    font-family: $font-family-heading;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-extrabold;
+    color: $color-primary-dark;
+  }
+
+  &__card-unit {
+    font-size: $font-size-sm;
+    color: $color-gray-500;
+  }
+
+  &__card-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    flex: 1;
+  }
+
+  &__card-detail {
+    font-size: $font-size-sm;
+    color: $color-gray-700;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    line-height: $line-height-normal;
+  }
+
+  &__check {
+    color: $color-success;
+    font-weight: $font-weight-bold;
+    flex-shrink: 0;
+  }
+
+  &__card-cta {
+    display: inline-block;
+    text-align: center;
+    margin-top: $spacing-lg;
+    padding: $spacing-sm $spacing-lg;
+    border: 2px solid $color-primary;
+    border-radius: $border-radius-md;
+    color: $color-primary;
+    font-family: $font-family-heading;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: all $transition-normal;
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+}
+
 // ---- Animações Globais do Componente ----
 @keyframes fadeIn {
   from {

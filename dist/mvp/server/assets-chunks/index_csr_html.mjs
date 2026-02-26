@@ -14,6 +14,6 @@ export default `<!doctype html>
 <style>*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}html{font-size:100%;scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}body{font-family:Inter,Segoe UI,Helvetica Neue,Arial,sans-serif;font-size:1rem;font-weight:400;line-height:1.5;color:#343a40;background-color:#fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}</style><link rel="stylesheet" href="styles-IPG7MHFD.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-IPG7MHFD.css"></noscript></head>
 <body ngcm="">
   <app-root></app-root>
-<link rel="modulepreload" href="chunk-4KAAKUTS.js"><script src="main-B4YCPNXD.js" type="module"></script></body>
+<link rel="modulepreload" href="chunk-RCLV6EZ6.js"><script src="main-3PJHE66A.js" type="module"></script></body>
 </html>
 `;
