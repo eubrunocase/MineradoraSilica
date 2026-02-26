@@ -3,7 +3,7 @@
 
 .products {
   @include section-padding;
-  background-color: $color-white;
+  background-color: $color-gray-100;
 
   &__container {
     @include container;
